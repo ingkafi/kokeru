@@ -17,6 +17,7 @@
     <link rel="icon" href="../assets2/img/brand/favicon.png" type="image/png">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Icons -->
     <link rel="stylesheet" href="{{URL::asset('assets2/vendor/nucleo/css/nucleo.css')}}" type="text/css">
     <link rel="stylesheet" href="{{URL::asset('assets2/vendor/@fortawesome/fontawesome-free/css/all.min.css')}}" type="text/css">
@@ -40,15 +41,9 @@
                   <!-- Nav items -->
                   <ul class="navbar-nav">
                     <li class="nav-item">
-                      <a class="nav-link" href="dashboard.html">
+                      <a class="nav-link" href="{{ url('/petugas') }}">
                         <i class="ni ni-tv-2 text-primary"></i>
                         <span class="nav-link-text">Dashboard</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="icons.html">
-                        <i class="ni ni-single-02 text-yellow"></i>
-                        <span class="nav-link-text">Petugas</span>
                       </a>
                     </li>
                     <li class="nav-item">
@@ -63,18 +58,7 @@
                         <span class="nav-link-text">Laporan</span>
                       </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="tables.html">
-                        <i class="ni ni-circle-08 text-orange"></i>
-                        <span class="nav-link-text">Admin</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="login.html">
-                        <i class="ni ni-calendar-grid-58 text-pink"></i>
-                        <span class="nav-link-text">Jadwal</span>
-                      </a>
-                    </li>
+                    
                   </ul>
                   <hr class="my-3">
                         
@@ -115,7 +99,7 @@
             </div>
           </nav>
           <div class="main-content" id="panel">
-            <div class="header pb-6" style="background-color: #4f7dcc" >
+            <div class="header pb-7" style="background-color: #4f7dcc" >
               <div class="container-fluid">
                 <div class="header-body">
                   <div class="row align-items-center py-4">

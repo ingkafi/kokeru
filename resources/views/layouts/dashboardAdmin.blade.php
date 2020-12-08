@@ -45,34 +45,28 @@
                         <span class="nav-link-text">Dashboard</span>
                       </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a class="nav-link" href="icons.html">
                         <i class="ni ni-single-02 text-yellow"></i>
                         <span class="nav-link-text">Janitor</span>
                       </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                       <a class="nav-link" href="{{ url('/admin/room') }}">
                         <i class="ni ni-pin-3 text-primary"></i>
-                        <span class="nav-link-text">Room</span>
+                        <span class="nav-link-text">Ruangan</span>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="profile.html">
+                      <a class="nav-link" href="">
                         <i class="ni ni-chart-bar-32 text-info"></i>
-                        <span class="nav-link-text">Report</span>
+                        <span class="nav-link-text">Laporan</span>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="tables.html">
-                        <i class="ni ni-circle-08 text-orange"></i>
-                        <span class="nav-link-text">Admin</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="login.html">
-                        <i class="ni ni-calendar-grid-58 text-pink"></i>
-                        <span class="nav-link-text">Schedule</span>
+                      <a class="nav-link" href="{{ route('register') }}">
+                        <i class="ni ni-single-02 text-pink"></i>
+                        <span class="nav-link-text">Daftar</span>
                       </a>
                     </li>
                   </ul>
@@ -81,7 +75,12 @@
                   <!-- Divider -->
                   
                   <ul class="navbar-nav mb-md-3">
-                   
+                    <li class="nav-item">
+                      <a class="nav-link" href="">
+                        <i class="ni ni-spaceship text-red"></i>
+                        <span class="nav-link-text">Reset Status</span>
+                      </a>
+                    </li>
                     @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -100,7 +99,7 @@
                              <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <i class="ni ni-spaceship"></i>{{ __('Logout') }}
+                                        <i class="ni ni-button-power"></i>{{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -115,7 +114,7 @@
             </div>
           </nav>
           <div class="main-content" id="panel">
-            <div class="header pb-6" style="background-color:  #28c29a" >
+            <div class="header pb-7" style="background-image: linear-gradient(to right, #28c29a , #4f7dcc)" >
               <div class="container-fluid">
                 <div class="header-body">
                   <div class="row align-items-center py-4">

@@ -22,6 +22,13 @@ class RoomsController extends Controller
         $rooms = DB::table('rooms')->get()->sortBy('nama_ruang');
         return view('admin/room', ['rooms' => $rooms]);
     }
+
+    public function roomBelum()
+    {
+        $rooms = DB::table('rooms')->get()->sortBy('nama_ruang');
+        return view('admin/room', ['rooms' => $rooms]);
+    }
+
     public function roomPetugas()
     {
         // $rooms = DB::table('rooms')->get();
@@ -30,7 +37,8 @@ class RoomsController extends Controller
     }
     public function dashAdmin()
     {
-        return view('admin/index');
+        $users = DB::table('users')->where('name', auth()->user()->name)->get();
+        return view('admin/index', ['users' => $users]);
     }
     public function dashPetugas()
     {
@@ -76,7 +84,7 @@ class RoomsController extends Controller
     public function adminshow(Room $room, User $user)
     {
         $room = DB::table('rooms')->where('id_ruang', $room->id_ruang)->first();
-        $user = User::select('id', 'name')->get();
+        $user = User::select('id', 'name')->where('is_admin', null)->get();
         return view('admin.edit', compact('user', 'room'));
     }
 
@@ -110,28 +118,29 @@ class RoomsController extends Controller
             ->update([
                 'status' => $request->status,
                 'nama_ruang' => $room->nama_ruang,
-                'foto_bukti' => $request->foto_bukti,
             ]);
-        if ($request->hasfile('foto_bukti')) {
-            $file = $request->file('foto_bukti');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $room->foto_bukti = $filename;
-            $file->move('uploads/foto_bukti/', $filename);
-        } else {
-            return $request;
-            $room->foto_bukti = '';
-        }
 
-        $room->save();
-        return redirect('/petugas/room')->with('room', $room);
+        $request->validate([
+            'foto_bukti' => 'required|max:5',
+            'foto_bukti.*' => 'mimes:jpeg,jpg,png,mp4,mov,wmv,avi'
+        ]);
+
+        if ($request->hasfile('foto_bukti')) {
+            foreach ($request->file('foto_bukti') as $file) {
+                $name = $file->getClientOriginalName();
+                $file->move(public_path() . '/uploads/foto_bukti/', $name);
+                $imgData[] = $name;
+            }
+            $room->foto_bukti = json_encode($imgData);
+            $room->save();
+            return redirect('/petugas/room')->with('room', $room);
+        }
     }
 
 
 
     public function adminupdate(Request $request, Room $room)
     {
-        $user = User::select('id', 'name')->get();
         Room::where('id_ruang', $room->id_ruang)
             ->update([
                 'petugas' => $request->petugas,

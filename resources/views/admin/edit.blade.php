@@ -34,7 +34,7 @@
                     <tr>
                     <th><input type="text" class="form-control"  name="nama_ruang" id="nama_ruang" value="{{$room->nama_ruang}}"></th>
                     <th><select class="form-control" name="gedung" id="gedung">
-                        <option selected>Pilih Gedung</option>
+                        <option selected>{{$room->gedung}}</option>
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
@@ -46,7 +46,7 @@
                     <th>{{$room->status}}</th>
                     <th>
                         <select class="form-control" name="petugas" id="petugas">
-                        <option value>Pilih Petugas</option>
+                        <option value>{{$room->petugas}}</option>
                             @foreach ($user as $us)
                             <option value="{{$us->name}}">{{$us->name}}</option>
                             @endforeach

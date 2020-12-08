@@ -35,13 +35,16 @@ Route::patch('/petugas/room/{room}', [RoomsController::class, 'update'])->name('
 // Route::post('/image-upload', [FileUpload::class, 'fileUpload'])->name('imageUpload');
 
 Route::get('/admin/room/{room}', [RoomsController::class, 'adminshow']);
+
 Route::get('/admin/room/{room}/foto', [RoomsController::class, 'showfoto']);
 Route::patch('/admin/room/{room}', [RoomsController::class, 'adminupdate'])->name('adminupdate');
+
 Route::get('/admin/room/{room}/resetStatus', [RoomsController::class, 'resetStatus'])->name('resetStatus');
 Route::patch('/admin/room/{room}/resetStatus', [RoomsController::class, 'resetStatus'])->name('resetStatus');
 
 Route::patch('/admin/room', [RoomsController::class, 'roomAdmin'])->middleware('is_admin');
 Route::get('/admin/room', [RoomsController::class, 'roomAdmin'])->middleware('is_admin');
+
 Route::get('/admin', [RoomsController::class, 'dashAdmin'])->name('admin.home')->middleware('is_admin');
 Route::get('/success', function () {
     return view('success');

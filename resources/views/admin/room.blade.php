@@ -8,7 +8,38 @@
 @endif
 
     <!-- Page content -->
-    <div class="container-fluid mt--6" >
+    <div class="container-fluid mt--7" >
+      <div class="col-md-12 text-center"> 
+        <div class="date text-right" style="color: white;font-size: 150%;" ><b> Kontrol Ruangan | </b> 
+        <script>
+            var hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+            document.write(hari[new Date().getDay()])
+        </script>, 
+        <script>
+            document.write(new Date().getDate())
+        </script> 
+        <script>
+            var months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            document.write(months[new Date().getMonth()])
+        </script> 
+        <script>
+            document.write(new Date().getFullYear())
+        </script><div id="curr_time">
+                <script>
+                    var div = document.getElementById('curr_time'); 
+                    function time() {
+                        div.innerHTML = "";
+                        var d = new Date();
+                        var s = d.getSeconds();
+                        var m = d.getMinutes();
+                        var h = d.getHours();
+                        div.innerHTML = h + ":" + m + ":" + s + " WIB";
+                    }
+                    setInterval(time, 1000);
+                </script>
+            </div>
+        </div> <br>
+    </div><br><br>
       <div class="row">
         @foreach ($rooms as $rm)
         <div class="col">
@@ -27,7 +58,7 @@
                   @else                    
                   <form method="POST">
                   <a href="/admin/room/{{$rm->id_ruang}}" class="btn btn-primary btn-sm" style="color:white">Edit</a>
-                  <a href="/admin/room/{{$rm->id_ruang}}/foto" class="btn btn-info btn-sm" style="color: white"> Cek Foto</a>
+                  <a href="/admin/room/{{$rm->id_ruang}}/foto" class="btn btn-info btn-sm" style="color: white"> Cek Bukti</a>
                   @method('patch')
                   @csrf
                     <a href="/admin/room/{{$rm->id_ruang}}/resetStatus" class="btn btn-danger btn-sm">Reset Status</a>
