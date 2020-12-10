@@ -19,14 +19,9 @@ class RoomsController extends Controller
      */
     public function roomAdmin()
     {
+        $users = DB::table('users')->where('name', auth()->user()->name)->get();
         $rooms = DB::table('rooms')->get()->sortBy('nama_ruang');
-        return view('admin/room', ['rooms' => $rooms]);
-    }
-
-    public function roomBelum()
-    {
-        $rooms = DB::table('rooms')->get()->sortBy('nama_ruang');
-        return view('admin/room', ['rooms' => $rooms]);
+        return view('admin/room', ['rooms' => $rooms, 'users' => $users]);
     }
 
     public function roomPetugas()
@@ -48,6 +43,11 @@ class RoomsController extends Controller
     {
         $room = DB::table('rooms')->where('id_ruang', $room->id_ruang)->get();
         return view('admin/foto', compact('room'));
+    }
+    public function showfotoPetugas(Room $room)
+    {
+        $room = DB::table('rooms')->where('id_ruang', $room->id_ruang)->get();
+        return view('petugas/foto', compact('room'));
     }
     /**
      * Show the form for creating a new resource.
@@ -154,7 +154,18 @@ class RoomsController extends Controller
         Room::where('id_ruang', $room->id_ruang)
             ->update([
                 'status' => 'BELUM',
+                'foto_bukti' => null,
 
+            ]);
+        return redirect('/admin/room');
+    }
+
+    public function resetAllStatus(Room $room)
+    {
+        $rooms = DB::table('rooms')
+            ->update([
+                'status' => 'BELUM',
+                'foto_bukti' => null,
             ]);
         return redirect('/admin/room');
     }

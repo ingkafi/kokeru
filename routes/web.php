@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FileUpload;
 use App\Http\Controllers\PagesController;
@@ -17,19 +20,21 @@ use App\Http\Controllers\PagesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [LandingController::class, 'index']);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('/petugas', [RoomsController::class, 'dashPetugas'])->name('petugas.home');
 Route::get('/petugas/room', [RoomsController::class, 'roomPetugas']);
 Route::post('/petugas/room', [RoomsController::class, 'update']);
 Route::get('/petugas/room/{room}', [RoomsController::class, 'show']);
 Route::patch('/petugas/room/{room}', [RoomsController::class, 'update'])->name('update');
+Route::get('/petugas/room/{room}/foto', [RoomsController::class, 'showfotoPetugas']);
 
 // Route::get('/image-upload', [FileUpload::class, 'createForm']);
 // Route::post('/image-upload', [FileUpload::class, 'fileUpload'])->name('imageUpload');
@@ -42,6 +47,9 @@ Route::patch('/admin/room/{room}', [RoomsController::class, 'adminupdate'])->nam
 Route::get('/admin/room/{room}/resetStatus', [RoomsController::class, 'resetStatus'])->name('resetStatus');
 Route::patch('/admin/room/{room}/resetStatus', [RoomsController::class, 'resetStatus'])->name('resetStatus');
 
+Route::get('/admin/resetAllStatus', [RoomsController::class, 'resetAllStatus'])->name('resetAllStatus');
+Route::patch('/admin/resetAllStatus', [RoomsController::class, 'resetAllStatus'])->name('resetAllStatus');
+
 Route::patch('/admin/room', [RoomsController::class, 'roomAdmin'])->middleware('is_admin');
 Route::get('/admin/room', [RoomsController::class, 'roomAdmin'])->middleware('is_admin');
 
@@ -50,6 +58,9 @@ Route::get('/success', function () {
     return view('success');
 });
 
-Route::resource('user', 'App\Http\Controllers\UserController');
-Route::get('/profile', 'App\Http\Controllers\UserController@profile')->name('user.profile');
-Route::post('/profile', 'App\Http\Controllers\UserController@postprofile')->name('user.postProfile');
+Route::get('/admin/reports', [ReportsController::class, 'index'])->middleware('is_admin');
+Route::get('/admin/reports/pdf', [ReportsController::class, 'pdf'])->middleware('is_admin');
+
+// Route::resource('user', 'App\Http\Controllers\UserController');
+// Route::get('/profile', 'App\Http\Controllers\UserController@profile')->name('user.profile');
+// Route::post('/profile', 'App\Http\Controllers\UserController@postprofile')->name('user.postProfile');
