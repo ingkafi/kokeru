@@ -2,43 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
+use App\Models\Report;
+use Carbon\Carbon;
 use PDF;
 
 class ReportsController extends Controller
 {
-    function index()
-    {
-     $rooms_data = $this->get_rooms_data();
-     return view('admin/reports')->with('rooms_data', $rooms_data);
-    }
-
     function get_rooms_data()
     {
      $rooms_data = DB::table('rooms')
-         ->limit(10)
+         ->limit(100)
          ->get();
      return $rooms_data;
     }
+    function reportShow(Report $report)
+    {
+        $report = DB::table('reports')->where('id_reports', $report->id_reports)->first();
+        return response()->file(public_path('/uploads/laporan/' . $report->file));
 
+    }
+    function index()
+    {
+        $rooms_data = $this->get_rooms_data();
+        $report = Report::all();
+        return view('admin.reports', ['report' => $report, 'rooms_data' => $rooms_data]);
+
+    }
     function pdf()
     {
-     $pdf = App::make('dompdf.wrapper');
-     $pdf->loadHTML($this->convert_rooms_data_to_html());
-     return $pdf->stream();
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->convert_rooms_data_to_html());
+        $pdf_name = time() . ".pdf";
+        $pdf->save(public_path('/uploads/laporan/' . $pdf_name));
+        $mytime = Carbon::now();
+        Report::create([
+                'tanggal' => $mytime,
+                'file' => $pdf_name,
+            ]);
+        return $pdf->stream();
     }
 
     function convert_rooms_data_to_html()
     {
      $rooms_data = $this->get_rooms_data();
+     $mytime = Carbon::now();
      $output = '
-     <script>
-        var d = new Date();
-        document.getElementById("demo").innerHTML = d;
-    </script>
-     <h3 align="center">Laporan Kebersihan Ruangan</h3>
+     <h3 align="center">Laporan Kebersihan Ruangan<br> '.$mytime.'</h3>
      
           <table width="100%" style="border-collapse: collapse; border: 0px;">
       <tr>

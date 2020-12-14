@@ -58,8 +58,9 @@ Route::get('/success', function () {
     return view('success');
 });
 
+Route::get('/admin/reports/{report}', [ReportsController::class, 'reportShow'])->middleware('is_admin');
 Route::get('/admin/reports', [ReportsController::class, 'index'])->middleware('is_admin');
-Route::get('/admin/reports/pdf', [ReportsController::class, 'pdf'])->middleware('is_admin');
+Route::get('/admin/reportstoday', [ReportsController::class, 'pdf'])->middleware('is_admin');
 
 // Route::resource('user', 'App\Http\Controllers\UserController');
 // Route::get('/profile', 'App\Http\Controllers\UserController@profile')->name('user.profile');

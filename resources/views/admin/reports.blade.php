@@ -1,77 +1,100 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.dashboardAdmin')
 
-<head>
-    <title>Laravel - How to Generate Dynamic PDF from HTML using DomPDF</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style type="text/css">
-        .box {
-            width: 600px;
-            margin: 0 auto;
-        }
+@section('content')
 
-    </style>
-</head>
+    <body>
+        <div class="container-fluid mt--6">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header border-0">
+                            <h3 class="mb-2">Kebersihan Ruangan Hari ini</h3> <a href="{{ url('admin/reportstoday') }}"
+                                class="btn btn-danger" style="float: right">Simpan
+                                Sebagai PDF</a>
+                            <script>
+                                var hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+                                document.write(hari[new Date().getDay()])
 
-<body>
-    <br />
-    <div class="container">
-        <h3 style="text-align:center">Laporan Kebersihan Ruangan</h3><br />
-        <script>
-            var hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
-            document.write(hari[new Date().getDay()])
+                            </script>,
+                            <script>
+                                document.write(new Date().getDate())
 
-        </script>
-        <script>
-            document.write(new Date().getDate())
+                            </script>
+                            <script>
+                                var months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
+                                    "September",
+                                    "Oktober", "November", "Desember"
+                                ];
+                                document.write(months[new Date().getMonth()])
 
-        </script>
-        <script>
-            var months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-                "Oktober", "November", "Desember"
-            ];
-            document.write(months[new Date().getMonth()])
+                            </script>
+                            <script>
+                                document.write(new Date().getFullYear())
 
-        </script>
-        <script>
-            document.write(new Date().getFullYear())
+                            </script>
+                            <br>
 
-        </script>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nama Ruang</th>
+                                        <th>Gedung</th>
+                                        <th>Petugas</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list">
+                                    @foreach ($rooms_data as $room)
+                                        <tr>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <th>{{ $room->nama_ruang }}</th>
+                                            <th>{{ $room->gedung }}</th>
+                                            <th>{{ $room->petugas }}</th>
+                                            <th>{{ $room->status }}</th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
-        <div class="row">
-            <div class="col-md-7" style="text-align:right">
-                <h4>Room Data</h4>
+                        </div><br><br>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-5" style="text-align:right">
-                <a href="{{ url('admin/reports/pdf') }}" class="btn btn-danger">Convert into PDF</a>
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="mb-2">Laporan Kebersihan Ruangan</h3> <a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>No.</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            @foreach ($report as $rp)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <th>{{ $rp->tanggal }}</th>
+                                    <th><a href="/admin/reports/{{ $rp->id_reports }}" class="btn btn-primary btn-sm"
+                                            style="color:white">Lihat Laporan</a>
+                                        <a href="/admin/reports/{{ $rp->id_reports }}" class="btn btn-danger btn-sm"
+                                            style="color:white">Hapus Laporan</a>
+                                    </th>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <br />
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Nama Ruang</th>
-                        <th>Gedung</th>
-                        <th>Petugas</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($rooms_data as $room)
-                        <tr>
-                            <td>{{ $room->nama_ruang }}</td>
-                            <td>{{ $room->gedung }}</td>
-                            <td>{{ $room->petugas }}</td>
-                            <td>{{ $room->status }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</body>
+    </body>
 
-</html>
+    </html>
+@endsection
