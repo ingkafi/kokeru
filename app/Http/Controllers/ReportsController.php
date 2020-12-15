@@ -26,7 +26,7 @@ class ReportsController extends Controller
     function index()
     {
         $rooms_data = $this->get_rooms_data();
-        $report = Report::all();
+        $report = Report::all()->sortBy('tanggal');
         return view('admin.reports', ['report' => $report, 'rooms_data' => $rooms_data]);
 
     }
@@ -40,6 +40,7 @@ class ReportsController extends Controller
         Report::create([
                 'tanggal' => $mytime,
                 'file' => $pdf_name,
+                'status' => 'SEMUA',
             ]);
         return $pdf->stream();
     }
@@ -78,5 +79,15 @@ class ReportsController extends Controller
                 <a>Manajer</a> <br><br>
             </div>';
      return $output;
+    }
+    public function destroyReport(Report $report) 
+    {
+    $report = DB::table('reports')->where('id_reports', $report->id_reports)->delete(); 
+    return redirect()->action([ReportsController::class, 'index']);
+    }
+    public function destroyAllReport(Report $report) 
+    {
+        $report = DB::table('reports')->delete();
+    return redirect()->action([ReportsController::class, 'index']);
     }
 }

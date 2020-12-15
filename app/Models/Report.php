@@ -10,7 +10,8 @@ class Report extends Model
     use HasFactory;
     protected $fillable = [
         'tanggal',
-        'file'
+        'file',
+        'status'
 
     ];
     protected $primaryKey = 'id_reports';

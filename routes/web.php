@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ReportsBelumController;
+use App\Http\Controllers\ReportsSudahController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
@@ -59,8 +61,15 @@ Route::get('/success', function () {
 });
 
 Route::get('/admin/reports/{report}', [ReportsController::class, 'reportShow'])->middleware('is_admin');
+Route::get('/admin/deleteAllReports', [ReportsController::class, 'destroyAllReport'])->middleware('is_admin');
+Route::get('/admin/reports/{report}/delete', [ReportsController::class, 'destroyReport'])->middleware('is_admin');
 Route::get('/admin/reports', [ReportsController::class, 'index'])->middleware('is_admin');
-Route::get('/admin/reportstoday', [ReportsController::class, 'pdf'])->middleware('is_admin');
+Route::get('/admin/reportsBelum', [ReportsBelumController::class, 'index'])->middleware('is_admin');
+Route::get('/admin/reportsSudah', [ReportsSudahController::class, 'index'])->middleware('is_admin');
+
+Route::get('/admin/cetakReportsSemua', [ReportsController::class, 'pdf'])->middleware('is_admin');
+Route::get('/admin/cetakReportsBelum', [ReportsBelumController::class, 'pdf'])->middleware('is_admin');
+Route::get('/admin/cetakReportsSudah', [ReportsSudahController::class, 'pdf'])->middleware('is_admin');
 
 // Route::resource('user', 'App\Http\Controllers\UserController');
 // Route::get('/profile', 'App\Http\Controllers\UserController@profile')->name('user.profile');

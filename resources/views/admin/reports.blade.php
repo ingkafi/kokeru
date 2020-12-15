@@ -3,15 +3,26 @@
 @section('content')
 
     <body>
-        <div class="container-fluid mt--6">
+        <div class="container-fluid mt--5">
             <div class="row">
-                <div class="col">
+                <div class="col"> <br><br><br>
+                    <h3>Pilih Status :</h3>
+                    <a href="/admin/reports" class="btn btn-primary btn-sm"style="color:white">Semua</a>
+                    <a href="/admin/reportsBelum" class="btn btn-danger btn-sm"style="color:white">Belum</a>
+                    <a href="/admin/reportsSudah" class="btn btn-success btn-sm"style="color:white">Sudah</a> <br> <br>
                     <div class="card">
+                        
                         <!-- Card header -->
                         <div class="card-header border-0">
-                            <h3 class="mb-2">Kebersihan Ruangan Hari ini</h3> <a href="{{ url('admin/reportstoday') }}"
-                                class="btn btn-danger" style="float: right">Simpan
-                                Sebagai PDF</a>
+                            <h3 class="mb-2">Kebersihan Ruangan Hari ini</h3> 
+                            @if(Request::is('admin/reportsBelum'))
+                            <a href="{{ url('admin/cetakReportsBelum') }}"class="btn btn-danger btn-sm">Simpan Sebagai PDF </a>
+                            @elseif(Request::is('admin/reportsSudah'))
+                            <a href="{{ url('admin/cetakReportsSudah') }}"class="btn btn-danger btn-sm">Simpan Sebagai PDF </a>
+                            @else
+                            <a href="{{ url('admin/cetakReportsSemua') }}"class="btn btn-danger btn-sm">Simpan Sebagai PDF </a>
+                                
+                            @endif
                             <script>
                                 var hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
                                 document.write(hari[new Date().getDay()])
@@ -66,7 +77,9 @@
             </div>
             <div class="card">
                 <div class="card-header border-0">
-                    <h3 class="mb-2">Laporan Kebersihan Ruangan</h3> <a>
+                    <h3 class="mb-2">Riwayat Laporan Kebersihan Ruangan</h3>
+                    <a href="/admin/deleteAllReports" class="btn btn-danger btn-sm"
+                        style="color:white; float:right"onclick="return confirm('Apakah anda yakin ingin hapus semua laporan?')">Hapus Semua Laporan</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
@@ -74,6 +87,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Tanggal</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -82,9 +96,10 @@
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <th>{{ $rp->tanggal }}</th>
+                                    <th>{{ $rp->status }}</th>
                                     <th><a href="/admin/reports/{{ $rp->id_reports }}" class="btn btn-primary btn-sm"
                                             style="color:white">Lihat Laporan</a>
-                                        <a href="/admin/reports/{{ $rp->id_reports }}" class="btn btn-danger btn-sm"
+                                        <a href="/admin/reports/{{ $rp->id_reports }}/delete" class="btn btn-danger btn-sm"
                                             style="color:white">Hapus Laporan</a>
                                     </th>
                                 </tr>
