@@ -13,22 +13,33 @@
             @foreach ($room as $rm)
                 <?php $images = json_decode($rm->foto_bukti); ?>
                 @foreach ($images as $file)
-                    <div class="col">
-                        <div class="card" style="width: 23rem;">
-
-                            <img class="card-img-top" src={{ asset('uploads/foto_bukti/' . $file) }} />
-
+                <?php  
+                $imageExtensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'svg', 'svgz', 'cgm', 'djv', 'djvu', 'ico', 'ief','jpe', 'pbm', 'pgm', 'pnm', 'ppm', 'ras', 'rgb', 'tif', 'tiff', 'wbmp', 'xbm', 'xpm', 'xwd'];
+                $explodeImage = explode('.', $file);
+                $extension = end($explodeImage);
+                ?>
+                @if (! in_array($extension, $imageExtensions))
+                <div class="col">
+                    <div class="card" style="width: 23rem;">
+                        <video width="400" height="250" controls class="thumb" data-full="{{ asset('uploads/foto_bukti/' . $file) }}">
+                            <source src="{{ asset('uploads/foto_bukti/' . $file) }}">
+                            </video> 
                         </div>
                     </div>
+                @else
+                <div class="col">
+                    <div class="card" style="width: 23rem;">
+                        <img class="card-img-top" src={{ asset('uploads/foto_bukti/' . $file) }} /> 
+                    </div>
+                </div>
+                @endif
                 @endforeach
-
             @endforeach
         </div>
         <a href="/petugas/room" class="btn btn-outline-danger" style="align-content:center">
-            <- Kembali </a>
+            <- Kembali </a> <br><br>
                 <!-- Footer -->
-    </div>
-    </div>
+    </div> 
     <!-- Argon Scripts -->
     <!-- Core -->
     <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>

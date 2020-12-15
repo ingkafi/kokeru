@@ -56,13 +56,6 @@
                                 <span class="nav-link-text">Ruangan</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="profile.html">
-                                <i class="ni ni-chart-bar-32 text-info"></i>
-                                <span class="nav-link-text">Laporan</span>
-                            </a>
-                        </li>
-
                     </ul>
                     <hr class="my-3">
 

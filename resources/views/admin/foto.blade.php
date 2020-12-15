@@ -19,28 +19,27 @@
                 $extension = end($explodeImage);
                 ?>
                 @if (! in_array($extension, $imageExtensions))
-                    <div class="col">
-                        <div class="card" style="width: 23rem;">
-                            <video width="800" height="500" controls class="thumb" data-full="{{ asset('uploads/foto_bukti/' . $file) }}">
-                                <source src="{{ asset('uploads/foto_bukti/' . $file) }}">
-                              </video>
+                <div class="col">
+                    <div class="card" style="width: 23rem;">
+                        <video width="400" height="250" controls class="thumb" data-full="{{ asset('uploads/foto_bukti/' . $file) }}">
+                            <source src="{{ asset('uploads/foto_bukti/' . $file) }}">
+                            </video> 
                         </div>
                     </div>
                 @else
-                    <div class="col">
-                        <div class="card" style="width: 23rem;">
-                            <img class="card-img-top" src={{ asset('uploads/foto_bukti/' . $file) }} />
-                        </div>
+                <div class="col">
+                    <div class="card" style="width: 23rem;">
+                        <img class="card-img-top" src={{ asset('uploads/foto_bukti/' . $file) }} /> 
                     </div>
+                </div>
                 @endif
                 @endforeach
             @endforeach
         </div>
         <a href="/admin/room" class="btn btn-outline-danger" style="align-content:center">
-            <- Kembali </a>
+            <- Kembali </a> <br><br>
                 <!-- Footer -->
-    </div>
-    </div>
+    </div> 
     <!-- Argon Scripts -->
     <!-- Core -->
     <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
