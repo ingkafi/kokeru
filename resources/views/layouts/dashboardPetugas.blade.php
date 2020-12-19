@@ -77,6 +77,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/') }}">
+                                    <i class="ni ni-shop"></i>{{ __('Beranda') }}
+                                </a>
 
                                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                              document.getElementById('logout-form').submit();">

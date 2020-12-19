@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use App\Models\Report;
 use Carbon\Carbon;
-use PDF;
+use Illuminate\Http\Request;
+use DateTime;
 
 class ReportsBelumController extends Controller
 {
@@ -24,12 +25,11 @@ class ReportsBelumController extends Controller
         return response()->file(public_path('/uploads/laporan/' . $report->file));
 
     }
-    function index()
+    function index(Request $request, Report $report)
     {
         $rooms_data = $this->get_rooms_data();
-        $report = Report::all()->sortBy('tanggal');
-        return view('admin.reports', ['report' => $report, 'rooms_data' => $rooms_data]);
-
+        $report = Report::all()->where('tanggal',$request->date);
+        return view('admin.reports', ['report' => $report, 'rooms_data' => $rooms_data])->with('date', $request->date);
     }
     function pdf()
     {
@@ -50,9 +50,14 @@ class ReportsBelumController extends Controller
     {
      $rooms_data = $this->get_rooms_data();
      $mytime = Carbon::now();
+     $time = Carbon::now()->format('H:i:s');
+     $monthNum = date('m', strtotime($mytime));
+     $date = date('j', strtotime($mytime));
+     $year = date('Y', strtotime($mytime));
+    $dateObj = DateTime::createFromFormat('!m', $monthNum);
+     $monthName = $dateObj->format('F');
      $output = '
-     <h3 align="center">Laporan Kebersihan Ruangan<br> '.$mytime.'</h3>
-     
+     <h3 align="center">Laporan Kebersihan Ruangan<br> '.$date.' ' .$monthName. ' ' .$year.'<br>'  .$time.'</h3>
           <table width="100%" style="border-collapse: collapse; border: 0px;">
       <tr>
     <th style="border: 1px solid; padding:12px;" width="30%">Ruangan</th>

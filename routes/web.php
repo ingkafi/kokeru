@@ -64,6 +64,7 @@ Route::get('/admin/reports/{report}', [ReportsController::class, 'reportShow'])-
 Route::get('/admin/deleteAllReports', [ReportsController::class, 'destroyAllReport'])->middleware('is_admin');
 Route::get('/admin/reports/{report}/delete', [ReportsController::class, 'destroyReport'])->middleware('is_admin');
 Route::get('/admin/reports', [ReportsController::class, 'index'])->middleware('is_admin');
+Route::post('/admin/reports', [ReportsController::class, 'index'])->middleware('is_admin');
 Route::get('/admin/reportsBelum', [ReportsBelumController::class, 'index'])->middleware('is_admin');
 Route::get('/admin/reportsSudah', [ReportsSudahController::class, 'index'])->middleware('is_admin');
 

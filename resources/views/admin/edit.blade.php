@@ -18,7 +18,7 @@
                     <!-- Light table -->
                     <div class="table-responsive">
                         <form action="/admin/room/{{ $room->id_ruang }}" method="post" enctype="multipart/form-data">
-                            @method('patch');
+                            @method('patch')
                             @csrf
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">

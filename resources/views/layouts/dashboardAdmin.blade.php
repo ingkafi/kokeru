@@ -67,12 +67,6 @@
                                 <span class="nav-link-text">Laporan</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">
-                                <i class="ni ni-single-02 text-pink"></i>
-                                <span class="nav-link-text">Daftar</span>
-                            </a>
-                        </li>
                     </ul>
                     <hr class="my-3">
 
@@ -101,9 +95,12 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/') }}">
+                                    <i class="ni ni-shop"></i>{{ __('Beranda') }}
+                                </a>
 
                                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                     document.getElementById('logout-form').submit();">
+                                                                         document.getElementById('logout-form').submit();">
                                     <i class="ni ni-button-power"></i>{{ __('Keluar') }}
                                 </a>
 

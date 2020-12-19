@@ -53,8 +53,17 @@
         .bgimg-1 {
             background-position: center;
             background-size: cover;
-            background-image: url("/img/landing.png");
-            min-height: 65%;
+            background-image: linear-gradient(to right, #15e0ae, #427ffc);
+            min-height: 90%;
+
+        }
+
+        .bgimg-4 {
+            background-position: center;
+            background-size: cover;
+            background-color: azure;
+            min-height: 90%;
+            min-width: 100%;
         }
 
         .bgimg-2 {
@@ -69,64 +78,81 @@
             border-radius: 25px;
         }
 
+        .header-left {
+            float: left;
+            vertical-align: center;
+        }
+
+        .header-right {
+            vertical-align: center;
+            float: right;
+            /* background-color: rgba(255, 255, 255, 0.3);
+            transition: all 0.5s; */
+        }
+
     </style>
 </head>
 
 <body>
-    <div class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
-        @if (Route::has('login'))
-            <div class="w3-display-middle w3-text-white" style="text-align: center">
-                <span class="w3-xxxlarge w3-hide-small"><b>Selamat datang di Kokeru!</b></span><br>
-                <span class="w3-large">Sistem kontrol kebersihan ruangan</span><br>
-                @auth
-                    <a href="{{ url('/home') }}"
-                        class="w3-button w3-round-xxlarge w3-padding-large w3-large w3-margin-top w3-hover-white"
-                        style="background-color: #15e0ae"><b>Home</b></a>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="w3-button w3-round-xxlarge w3-padding-large w3-large w3-margin-top w3-hover-white"
-                        style="background-color: #15e0ae"><b>Login</b></a>
 
-                    @if (Route::has('register'))
-                        {{-- <a href="{{ route('register') }}"
-                            class="w3-button w3-round-xxlarge w3-padding-large w3-large w3-margin-top w3-hover-white"
-                            style="background-color: #427ffc"><b>Register</b></a> --}}
-                    @endif
+    @if (Route::has('login'))
+        <div class="col-md-14">
+            <div class="col-md-14 text-center navbar navbar-dark" style="background-color: azure">
+                <div class="header-left">
+                    <img src="{{ asset('img/logo.png') }}" alt="" width="150" height="41">
+                </div>
+                {{-- <a class="w3-xxxlarge"
+                    style="text-align: center; color:white;"><b>Selamat Datang di Kokeru !</b></a>
+                --}}
+                @auth
+                    <div class="header-right">
+                        @if (auth()->user()->is_admin == 1)
+                            <a href="{{ url('/admin') }}" class="btn btn-info">Dashboard</a><br>
+                        @else
+                            <a href="{{ url('/petugas') }}" class="btn btn-info">Dashboard</a><br>
+                        @endif
+                    </div>
+                @else
+                    <div class="header-right">
+                        <a href="{{ route('login') }}" class="btn btn-success">Log in</a><br>
+                    </div>
                 @endauth
             </div>
-        @endif
-
-    </div> <br>
-    <div class="container-fluid">
-        <div class="col-md-12">
-            <div class="col-md-12 text-center">
-                <a class="w3-xlarge" style="text-align: center"><b>Status Kebersihan Ruangan</b></a><br> <br>
-            </div>
-            <div class="bgimg-2 w3-display-container" id="home">
-                <div class="row">
-                    @foreach ($rooms as $rm)
-                        <div class="col">
-                            <div class="card" style="width: 18rem;">
+    @endif
+    <div class="bgimg-4 w3-display-container container-fluid">
+        <div class="text-center">
+            <br><a class="w3-xlarge text-center" style="text-align: center;color:black; margin-top:10px;"><b>Status
+                    Kebersihan
+                    Ruangan</b></a><br> <br>
+        </div>
+        <div id="home">
+            <div class="row">
+                @foreach ($rooms as $rm)
+                    <div class="col d-flex justify-content-center">
+                        <div class="card" style="width: 20rem;">
+                            @if ($rm->status == 'BELUM')
                                 <img class="card-img-top" src={{ asset('uploads/foto_ruang/' . $rm->foto_ruang) }} />
-                                <div class="card-body">
-                                    <h2 class="card-title">Ruang {{ $rm->nama_ruang }}
-                                        @if ($rm->status == 'BELUM')
-                                            <a class="btn btn-danger btn-sm disabled"
-                                                style="color: white ; border-radius:100px; float:right;">
-                                                {{ $rm->status }}</a>
-                                    </h2>
-                                @else
-                                    <a class="btn btn-success btn-sm disabled"
-                                        style="color: white ; border-radius:100px; float:right;"> {{ $rm->status }}</a>
-                                    </h2>
-                    @endif
-                    <p class="card-text">Gedung {{ $rm->gedung }}</p>
-                </div>
+                                <div class="card-body text-center"
+                                    style="background: linear-gradient(45deg,#FF5370,#ff869a);">
+                                    <h1 class="card-title" style="color: white">Ruang {{ $rm->nama_ruang }}</h1>
+                                    <h2><a style="color: white">{{ $rm->status }}</a></h2>
+                                    <p class="card-text" style="color: white">Gedung {{ $rm->gedung }}</p>
+
+                                </div>
+                            @else
+                                <img class="card-img-top" src={{ asset('uploads/foto_ruang/' . $rm->foto_ruang) }} />
+                                <div class="card-body text-center"
+                                    style="background: linear-gradient(45deg,#2ed8b6,#59e0c5);">
+                                    <h1 class="card-title" style="color: white">Ruang {{ $rm->nama_ruang }}</h1>
+                                    <h2><a style="color: white">{{ $rm->status }}</a></h2>
+                                    <p class="card-text" style="color: white">Gedung {{ $rm->gedung }}</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
-        @endforeach
-    </div>
-    </div>
     </div>
     </div>
     <script>
